@@ -444,7 +444,8 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
         }
       }
       if (normalizedUpdates.inStock !== undefined) {
-        normalizedUpdates.inStock = normalizedUpdates.inStock === true || normalizedUpdates.inStock === 'true' || normalizedUpdates.inStock === 1;
+        const inStockVal = normalizedUpdates.inStock;
+        normalizedUpdates.inStock = String(inStockVal) === 'true' || String(inStockVal) === '1';
       }
       
       const response = await fetch('/api/admin/products', {

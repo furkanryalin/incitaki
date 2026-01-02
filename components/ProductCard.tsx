@@ -215,7 +215,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <button
               onClick={handleIncreaseQuantity}
               className="w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center bg-white border border-orange-600 text-orange-600 rounded-lg hover:bg-orange-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-              disabled={!product.inStock || (product.stock !== null && cartQuantity >= product.stock)}
+              disabled={!product.inStock || (product.stock != null && cartQuantity >= product.stock)}
             >
               <Plus className="w-4 h-4" />
             </button>

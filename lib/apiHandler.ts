@@ -52,8 +52,7 @@ export function handleApiError(error: unknown): NextResponse<ApiError> {
   // Zod Validation Error
   if (error instanceof ZodError) {
     const errorMessages: Record<string, string> = {};
-    // ZodError'un issues property'sini kontrol et
-    const issues = error.issues || error.errors || [];
+      const issues = error.issues || [];
     if (issues.length > 0) {
       issues.forEach((err: any) => {
         const path = (err.path || []).join('.') || 'root';
@@ -147,12 +146,12 @@ export function handleApiError(error: unknown): NextResponse<ApiError> {
  * Automatically handles errors and validates requests
  */
 export function createApiHandler<T extends z.ZodTypeAny>(
-  schema?: T,
   handler: (
     req: NextRequest,
     validatedData: T extends z.ZodType<any, any, infer U> ? U : any,
     context?: any
-  ) => Promise<NextResponse<ApiSuccess | ApiError>>
+  ) => Promise<NextResponse<ApiSuccess | ApiError>>,
+  schema?: T
 ) {
   return async (req: NextRequest, context?: any) => {
     try {

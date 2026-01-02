@@ -146,7 +146,7 @@ export async function POST(request: NextRequest) {
               name: product?.name || 'Ürün',
               category1: product?.categoryRelation?.name || 'Genel',
               itemType: 'PHYSICAL',
-              price: item.price.toFixed(2),
+              price: item.price,
             };
           })),
         };

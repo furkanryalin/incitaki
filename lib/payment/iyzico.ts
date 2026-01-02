@@ -57,14 +57,13 @@ interface PaymentRequest {
 }
 
 interface PaymentResponse {
+    paymentId?: string;
   status: string;
-  paymentId: string;
   conversationId: string;
   price: number;
   paidPrice: number;
   installment: number;
   paymentStatus: string;
-  fraudStatus: number;
   merchantCommissionRate: number;
   merchantCommissionRateAmount: number;
   iyziCommissionRateAmount: number;
@@ -72,8 +71,6 @@ interface PaymentResponse {
   cardType: string;
   cardAssociation: string;
   cardFamily: string;
-  binNumber: string;
-  lastFourDigits: string;
   basketId: string;
   currency: string;
   itemTransactions: Array<{
@@ -103,16 +100,6 @@ interface PaymentResponse {
       convertedPayoutAmount: number;
     };
   }>;
-  connectorName: string;
-  authCode: string;
-  hostReference: string;
-  phase: string;
-  lastFourDigits: string;
-  binNumber: string;
-  paymentId: string;
-  fraudStatus: number;
-  connectorName: string;
-  callbackUrl: string;
 }
 
 /**

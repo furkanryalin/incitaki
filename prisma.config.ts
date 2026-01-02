@@ -12,6 +12,6 @@ export default defineConfig({
   },
   engine: "classic",
   datasource: {
-    url: env("DATABASE_URL", defaultDbUrl),
+    url: process.env.DATABASE_URL ? env("DATABASE_URL") : defaultDbUrl,
   },
 });

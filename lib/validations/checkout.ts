@@ -69,9 +69,7 @@ export const creditCardSchema = z.object({
 });
 
 // Payment method validation
-export const paymentMethodSchema = z.enum(['credit-card', 'bank-transfer'], {
-  errorMap: () => ({ message: 'Geçerli bir ödeme yöntemi seçiniz' }),
-});
+export const paymentMethodSchema = z.enum(['credit-card', 'bank-transfer']);
 
 // Complete checkout validation
 export const checkoutSchema = z.object({

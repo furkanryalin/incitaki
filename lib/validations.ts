@@ -109,8 +109,8 @@ export const newsletterSchema = z.object({
  * Format Zod errors into a user-friendly message
  */
 export function formatZodError(error: z.ZodError): string {
-  if (error.errors && error.errors.length > 0) {
-    return error.errors[0].message || 'Geçersiz veri';
+  if (error.issues && error.issues.length > 0) {
+    return error.issues[0].message || 'Geçersiz veri';
   }
   return 'Geçersiz veri';
 }
