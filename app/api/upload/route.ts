@@ -112,20 +112,27 @@ export async function POST(request: NextRequest) {
     // Dosyayı Cloudinary'ye yükle
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const cloudinaryResult = await uploadImageToCloudinary(buffer, fileName);
-    // Cloudinary'den dönen url'yi kullan (tip güvenli erişim)
-    const result = cloudinaryResult as any;
-    return NextResponse.json({
-      success: true,
-      url: result.secure_url,
-      fileName: result.public_id,
-    }, {
-      headers: {
-        'X-RateLimit-Limit': '10',
-        'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
-        'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
-      },
-    });
+    try {
+      const cloudinaryResult = await uploadImageToCloudinary(buffer, fileName);
+      if (!cloudinaryResult || !(cloudinaryResult as any).secure_url) {
+        throw new Error('Cloudinary upload failed, no URL returned');
+      }
+      const result = cloudinaryResult as any;
+      return NextResponse.json({
+        success: true,
+        url: result.secure_url,
+        fileName: result.public_id,
+      }, {
+        headers: {
+          'X-RateLimit-Limit': '10',
+          'X-RateLimit-Remaining': rateLimitResult.remaining.toString(),
+          'X-RateLimit-Reset': rateLimitResult.resetTime.toString(),
+        },
+      });
+    } catch (err) {
+      console.error('Cloudinary upload error:', err);
+      return NextResponse.json({ error: 'Cloudinary upload error', details: (err as Error).message }, { status: 500 });
+    }
   } catch (error) {
     console.error('Upload error:', error);
     return NextResponse.json(
