@@ -591,7 +591,12 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
       });
       const data = await response.json();
       if (data.success) {
-        setCategories((prev) => [data.category, ...prev]);
+        // API'dan dönen response: { success: true, data: { category: ... } }
+        const newCategory = data.data?.category || data.category;
+        if (!newCategory || !newCategory.id) {
+          throw new Error('API response: Kategori objesi eksik veya id yok');
+        }
+        setCategories((prev) => [newCategory, ...prev]);
       } else {
         throw new Error(data.error || 'Kategori eklenemedi');
       }
