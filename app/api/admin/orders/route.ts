@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     });
 
     // Format orders for frontend
-    const formattedOrders = orders.map(order => ({
+    const formattedOrders = orders.map((order: any) => ({
       ...order,
       items: order.items.map(item => ({
         product: {
