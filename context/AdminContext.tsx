@@ -26,7 +26,7 @@ interface AdminContextType {
   deleteProduct: (productId: string) => void;
   bulkDiscount: (productIds: string[], discountPercent: number) => void;
   categories: Category[];
-  addCategory: (category: Category) => Promise<void>;
+  addCategory: (category: Partial<Category>) => Promise<void>;
   updateCategory: (categoryId: string, updates: Partial<Category>) => Promise<void>;
   deleteCategory: (categoryId: string) => Promise<void>;
   subCategories: SubCategory[];
@@ -582,7 +582,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   };
 
   // Category functions
-  const addCategory = async (category: Category) => {
+  const addCategory = async (category: Partial<Category>) => {
     try {
       const response = await fetch('/api/admin/categories', {
         method: 'POST',
