@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Kolye",
+    "slug": "kolye"
+  },
+  {
+    "id": "2",
+    "name": "Yüzük",
+    "slug": "yuzuk"
+  },
+  {
+    "id": "3",
+    "name": "Küpe",
+    "slug": "kupe"
+  },
+  {
+    "id": "4",
+    "name": "Bilezik",
+    "slug": "bilezik"
+  },
+  {
+    "id": "5",
+    "name": "Takım",
+    "slug": "takim"
+  },
+  {
+    "id": "category-1763071232975",
+    "name": "Tesbih",
+    "slug": "tesbih"
+  }
+]
