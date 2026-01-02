@@ -24,7 +24,7 @@ export async function GET(request: NextRequest) {
     // Format orders for frontend
     const formattedOrders = orders.map((order: any) => ({
       ...order,
-      items: order.items.map(item => ({
+      items: order.items.map((item: any) => ({
         product: {
           ...item.product,
           images: parseProductImages(item.product.images),
