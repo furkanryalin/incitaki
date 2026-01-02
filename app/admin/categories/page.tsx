@@ -114,13 +114,12 @@ export default function CategoriesPage() {
     }
 
     try {
-      const category: Category = {
-        id: `category-${Date.now()}`,
-        name: newCategory.name,
-        slug: newCategory.slug,
+      // Sadece name, slug, image ile yeni kategori oluştur
+      await addCategory({
+        name: newCategory.name!,
+        slug: newCategory.slug!,
         image: newCategory.image,
-      };
-      await addCategory(category);
+      });
       setNewCategory({ name: '', slug: '' });
       setIsAdding(false);
       // Clear draft after successful submission
