@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
-import { join } from 'path';
-import { existsSync } from 'fs';
+import { uploadImageToCloudinary } from '@/lib/cloudinary';
 import { rateLimit, getClientIP } from '@/lib/rateLimit';
 
 // Güvenli dosya uzantıları
@@ -111,26 +109,15 @@ export async function POST(request: NextRequest) {
     const extension = sanitizedFileName.split('.').pop()?.toLowerCase() || 'jpg';
     const fileName = `product_${timestamp}_${random}.${extension}`;
 
-    // Public/products klasörünü kontrol et ve oluştur
-    const uploadDir = join(process.cwd(), 'public', 'products');
-    if (!existsSync(uploadDir)) {
-      await mkdir(uploadDir, { recursive: true });
-    }
-
-    // Dosyayı yükle
+    // Dosyayı Cloudinary'ye yükle
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const filePath = join(uploadDir, fileName);
-    
-    await writeFile(filePath, buffer);
-
-    // URL'yi döndür
-    const fileUrl = `/products/${fileName}`;
-
+    const cloudinaryResult = await uploadImageToCloudinary(buffer, fileName);
+    // Cloudinary'den dönen url'yi kullan
     return NextResponse.json({
       success: true,
-      url: fileUrl,
-      fileName: fileName,
+      url: cloudinaryResult.secure_url,
+      fileName: cloudinaryResult.public_id,
     }, {
       headers: {
         'X-RateLimit-Limit': '10',
