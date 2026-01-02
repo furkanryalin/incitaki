@@ -113,11 +113,12 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const cloudinaryResult = await uploadImageToCloudinary(buffer, fileName);
-    // Cloudinary'den dönen url'yi kullan
+    // Cloudinary'den dönen url'yi kullan (tip güvenli erişim)
+    const result = cloudinaryResult as any;
     return NextResponse.json({
       success: true,
-      url: cloudinaryResult.secure_url,
-      fileName: cloudinaryResult.public_id,
+      url: result.secure_url,
+      fileName: result.public_id,
     }, {
       headers: {
         'X-RateLimit-Limit': '10',
